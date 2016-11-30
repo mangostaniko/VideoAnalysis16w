@@ -29,11 +29,41 @@ function [bok,scribble_count, fg_scribbles, histo_fg, histo_bg] = get_histograms
     %----------------------------------------------------------------------
     % Task a: Filter user scribbles to indicate foreground and background   
     %----------------------------------------------------------------------
-
-
     %----------------------------------------------------------------------
     % Task b: Generate color models for foreground and background
     %----------------------------------------------------------------------
     
+    [size_y, size_x, size_col] = size(reference_frame);
+    foreground_map = zeros(size_y, size_x);
+    foreground_colors = [];
+    background_map = zeros(size_y, size_x);
+    background_colors = [];
+    foregroundCount = 1;
+    backgroundCount = 1;
+    
+    for count_y = 1 : size_y
+        for count_x = 1 : size_x
+            % Foreground
+            if frames_scribbles(count_y, count_x,1,1) ~= reference_frame(count_y, count_x,1)
+                foreground_map(count_y, count_x) = 1;
+                foreground_colors(foregroundCount,1) = reference_frame(count_y, count_x,1);
+                foreground_colors(foregroundCount,2) = reference_frame(count_y, count_x,2);
+                foreground_colors(foregroundCount,3) = reference_frame(count_y, count_x,3);
+                foregroundCount = foregroundCount+1;
+            end
+            % Background
+            if frames_scribbles(count_y, count_x,1,1) ~= reference_frame(count_y, count_x,1)
+                background_map(count_y, count_x) = 1;
+                background_colors(backgroundCount,1) = reference_frame(count_y, count_x,1);
+                background_colors(backgroundCount,2) = reference_frame(count_y, count_x,2);
+                background_colors(backgroundCount,3) = reference_frame(count_y, count_x,3);
+                backgroundCount = backgroundCount+1;
+            end
+        end
+    end
+    
+    fg_scribbles = foreground_map;
+    histo_fg = colHist(foreground_colors(:,1), foreground_colors(:,2), foreground_colors(:,3), bins);
+    histo_bg = colHist(background_colors(:,1), background_colors(:,2), background_colors(:,3), bins);
     
 end

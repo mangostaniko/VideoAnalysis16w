@@ -30,7 +30,7 @@ function exercise1(input_directory, output_directory, file_extension)
     % call function get_histograms with suitable parameters
     % [return parameters]=get_histograms(parameters,...);
     
-    
+    [bok,scribble_count, fg_scribbles, histo_fg, histo_bg] = get_histograms('../fg_frames/', file_list, 10);
     if (~bok)
         disp(['No scribble or no reference frame found in input directory ' input_directory '!'])
         return;
