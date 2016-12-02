@@ -1,4 +1,4 @@
-function foreground_map = segmentation(frames,fg_scribbles,Hfc,Hbc,numbins)
+function foreground_map = segmentation(frames,fg_scribbles,Hfc,Hbc,bins)
 % frames .. video frames (r,g,b,frame)
 % fg_scribbles .. binary map marking scribbled pixels in scribbled frame
 % Hfc .. color histogram of foreground pixels with colors grouped into bins
