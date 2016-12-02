@@ -1,5 +1,7 @@
 function [bok,scribble_count, fg_scribbles, histo_fg, histo_bg] = get_histograms(input_directory,file_list,bins)     
     % load reference frame and its foreground and background scribbles
+    % other frames are not considered here!!
+    
     bok=false;
     scribble_count=0;
     reference_frame=[];
@@ -43,15 +45,15 @@ function [bok,scribble_count, fg_scribbles, histo_fg, histo_bg] = get_histograms
     
     for count_y = 1 : size_y
         for count_x = 1 : size_x
-            % Foreground
+            % Foreground scribble pixels
             if frames_scribbles(count_y, count_x,1,1) ~= reference_frame(count_y, count_x,1)
-                foreground_map(count_y, count_x) = 1;
+                foreground_map(count_y, count_x) = 1; % binary map
                 foreground_colors(foregroundCount,1) = reference_frame(count_y, count_x,1);
                 foreground_colors(foregroundCount,2) = reference_frame(count_y, count_x,2);
                 foreground_colors(foregroundCount,3) = reference_frame(count_y, count_x,3);
                 foregroundCount = foregroundCount+1;
             end
-            % Background
+            % Background scribbled pixels
             if frames_scribbles(count_y, count_x,1,1) ~= reference_frame(count_y, count_x,1)
                 background_map(count_y, count_x) = 1;
                 background_colors(backgroundCount,1) = reference_frame(count_y, count_x,1);
@@ -62,6 +64,7 @@ function [bok,scribble_count, fg_scribbles, histo_fg, histo_bg] = get_histograms
         end
     end
     
+    % create binned color histograms
     fg_scribbles = foreground_map;
     histo_fg = colHist(foreground_colors(:,1), foreground_colors(:,2), foreground_colors(:,3), bins);
     histo_bg = colHist(background_colors(:,1), background_colors(:,2), background_colors(:,3), bins);
