@@ -32,20 +32,20 @@ function foreground_map = segmentation(frames,fg_scribbles,Hfc,Hbc,bins)
         end
     end
     
+    foreground_map(isnan(foreground_map))=0;
     %----------------------------------------------------------------------
     % Task e: Filter cost-volume with guided filter
     %----------------------------------------------------------------------
  
-    
     %----------------------------------------------------------------------
     % Task f: delete regions which are not connected to foreground scribble
     %----------------------------------------------------------------------
-    
+
 
     %----------------------------------------------------------------------
     % Task g: Guided feathering
     %----------------------------------------------------------------------
-    foreground_map=[];
+
     
     
 end

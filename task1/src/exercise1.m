@@ -27,7 +27,7 @@ function exercise1(input_directory, output_directory, file_extension)
     % Task a+b: get foreground and background histograms 
     %----------------------------------------------------------------------
     bok = false; % boolean ok
-    numbins = 10; % number of bins for color histogram
+    numbins = 30; % number of bins for color histogram
     % call function get_histograms with suitable parameters
     % [return parameters]=get_histograms(parameters,...);
     
