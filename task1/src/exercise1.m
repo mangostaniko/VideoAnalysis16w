@@ -41,9 +41,9 @@ function exercise1(input_directory, output_directory, file_extension)
     end 
     
     frames = [];
-    count=0;
+    count = 0;
     loop_cnt = 0;
-    loop_size= 22;
+    loop_size = 22; % frame batch size for segmentation
 
     for j = 1:(numel(file_list))
         frame_name = file_list(j).name;
@@ -60,6 +60,7 @@ function exercise1(input_directory, output_directory, file_extension)
         % cache frames
         frames(:,:,:,count) = uint8(frame(:,:,:));
               
+        % do segmentation in batches
         % every <loop_size> frames run segmentation
         if (((mod(count, loop_size)) == 0) || (j==(numel(file_list)-3)))
             %--------------------------------------------------------------

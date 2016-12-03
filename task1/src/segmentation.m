@@ -5,7 +5,7 @@ function foreground_map = segmentation(frames,fg_scribbles,Hfc,Hbc,bins)
 % Hbc .. color histogram of background pixels with colors grouped into bins
 % numbins .. the number of bins per channel to aggregate colors in histograms
 
-    [size_y, size_x, size_col, size_frame] = size(frames(:,:,:,:));
+    [size_y, size_x, size_col, num_frames] = size(frames(:,:,:,:));
     cost_volume = zeros(size_y, size_x, size_col);
 
     %----------------------------------------------------------------------
@@ -14,7 +14,7 @@ function foreground_map = segmentation(frames,fg_scribbles,Hfc,Hbc,bins)
    
     % To calculate the cost-volume matrice we need to visit each pixel of 
     % the frame, and for each one calculate the cost-volume.
-    for frame_counter=1:size_frame
+    for frame_counter=1:num_frames
         for count_y=1:size_y
             for count_x=1:size_x
                 
@@ -36,9 +36,10 @@ function foreground_map = segmentation(frames,fg_scribbles,Hfc,Hbc,bins)
     %----------------------------------------------------------------------
     % Task e: Filter cost-volume with guided filter
     %----------------------------------------------------------------------
-    rt = size_frame;
+    filter_radius = 20;
+    filter_radius_frames = 5;
     eps = 0.00001;
-    cost_volume_filtered = guidedfilter_vid_color(frames, cost_volume, 3, rt, eps);
+    cost_volume_filtered = guidedfilter_vid_color(frames, cost_volume, filter_radius, filter_radius_frames, eps);
     
     cost_volume_filtered(isnan(cost_volume_filtered))=0;
     
@@ -58,7 +59,7 @@ function foreground_map = segmentation(frames,fg_scribbles,Hfc,Hbc,bins)
     %----------------------------------------------------------------------
 
     % apply guided filter again to feather edges
-    fg_binary_map = guidedfilter_vid_color(frames, connected_map, 3, rt, eps);
+    fg_binary_map = guidedfilter_vid_color(frames, connected_map, filter_radius, filter_radius_frames, eps);
     
     fg_binary_map(isnan(fg_binary_map))=0;
     fg_binary_map = floor(fg_binary_map.*threshold);

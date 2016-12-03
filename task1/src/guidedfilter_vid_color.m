@@ -1,9 +1,10 @@
-%   GUIDEDFILTER_COLOR   O(1) time implementation of guided filter using a color image as the guidance.
+% GUIDEDFILTER_COLOR   O(1) time implementation of guided filter using a color image as the guidance.
 %
-%   - guidance image: I (should be a color (RGB) video)
-%   - filtering input image: p (should be a gray-scale/single channel video)
-%   - local window radius: r
-%   - regularization parameter
+% I   .. guidance image (should be a color (RGB) video)
+% p   .. filtering input image (should be a gray-scale/single channel video)
+% r   .. local filter window radius
+% rt  .. window radius in time (how many neighboring frames included)
+% eps .. regularization parameter to avoid division by zero
 
 function q = guidedfilter_vid_color(I_vid, p_vid, r, rt, eps)
     [hei, wid, dim, time] = size(I_vid);
@@ -46,7 +47,7 @@ function q = guidedfilter_vid_color(I_vid, p_vid, r, rt, eps)
     a_r = zeros(hei, wid, time);
     a_g = zeros(hei, wid, time);
     a_b = zeros(hei, wid, time);
-    temp = eps * eye(3);
+    epsMat = eps * eye(3);
     for t=1:time
         for y=1:hei
             for x=1:wid        
@@ -57,7 +58,7 @@ function q = guidedfilter_vid_color(I_vid, p_vid, r, rt, eps)
 
                 cov_Ip = [cov_Ip_r(y, x, t), cov_Ip_g(y, x, t), cov_Ip_b(y, x, t)];        
 
-                as = cov_Ip/(Sigma + temp); 
+                as = cov_Ip/(Sigma + epsMat); 
 
                 a_r(y,x,t)= as(1);
                 a_g(y,x,t)= as(2);
