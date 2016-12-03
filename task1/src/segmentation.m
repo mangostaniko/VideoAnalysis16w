@@ -6,7 +6,7 @@ function foreground_map = segmentation(frames,fg_scribbles,Hfc,Hbc,bins)
 % numbins .. the number of bins per channel to aggregate colors in histograms
 
     [size_y, size_x, size_col, size_frame] = size(frames(:,:,:,:));
-    foreground_map = zeros(size_y, size_x, size_col);
+    cost_volume = zeros(size_y, size_x, size_col);
 
     %----------------------------------------------------------------------
     % Task c: Generate cost-volume
@@ -27,25 +27,34 @@ function foreground_map = segmentation(frames,fg_scribbles,Hfc,Hbc,bins)
                 relevant_bin = floor(imr*f) + floor(img*f)*bins + floor(imb*f)*bins*bins+1;
                 
                 % Now we use the founded Bin to get the volume-cost
-                foreground_map(count_y, count_x, frame_counter) = Hfc(relevant_bin)/(Hfc(relevant_bin)+Hbc(relevant_bin));
+                cost_volume(count_y, count_x, frame_counter) = Hfc(relevant_bin)/(Hfc(relevant_bin)+Hbc(relevant_bin));
             end
         end
     end
     
-    foreground_map(isnan(foreground_map))=0;
+    cost_volume(isnan(cost_volume))=0;
     %----------------------------------------------------------------------
     % Task e: Filter cost-volume with guided filter
     %----------------------------------------------------------------------
- 
+
+    cost_volume_filtered = guidedfilter_vid_color(frames, cost_volume, 20, 1, 0.00001);
+    fg_binary_map = cost_volume_filtered(cost_volume_filtered > 0.5);
+    
     %----------------------------------------------------------------------
     % Task f: delete regions which are not connected to foreground scribble
     %----------------------------------------------------------------------
 
-
+    fg_binary_map = keepConnected(fg_binary_map, fg_scribbles);
+    
     %----------------------------------------------------------------------
     % Task g: Guided feathering
     %----------------------------------------------------------------------
 
+    % apply guided filter again to feather edges
+    fg_binary_map = guidedfilter_vid_color(frames, fg_binary_map, 20, 1, 0.00001);
+    
+    foreground_map = fg_binary_map;
+    
     
     
 end
