@@ -36,22 +36,33 @@ function foreground_map = segmentation(frames,fg_scribbles,Hfc,Hbc,bins)
     %----------------------------------------------------------------------
     % Task e: Filter cost-volume with guided filter
     %----------------------------------------------------------------------
-
-    cost_volume_filtered = guidedfilter_vid_color(frames, cost_volume, 20, 1, 0.00001);
-    fg_binary_map = cost_volume_filtered(cost_volume_filtered > 0.5);
+    rt = size_frame;
+    eps = 0.00001;
+    cost_volume_filtered = guidedfilter_vid_color(frames, cost_volume, 3, rt, eps);
+    
+    cost_volume_filtered(isnan(cost_volume_filtered))=0;
+    
+    threshold = 5;
+    cost_volume_filtered = floor(cost_volume_filtered.*threshold);
+    cost_volume_filtered = ceil(cost_volume_filtered.*(1/threshold));
+    
     
     %----------------------------------------------------------------------
     % Task f: delete regions which are not connected to foreground scribble
     %----------------------------------------------------------------------
 
-    fg_binary_map = keepConnected(fg_binary_map, fg_scribbles);
+    connected_map = keepConnected(cost_volume_filtered(:,:,:), fg_scribbles);
     
     %----------------------------------------------------------------------
     % Task g: Guided feathering
     %----------------------------------------------------------------------
 
     % apply guided filter again to feather edges
-    fg_binary_map = guidedfilter_vid_color(frames, fg_binary_map, 20, 1, 0.00001);
+    fg_binary_map = guidedfilter_vid_color(frames, connected_map, 3, rt, eps);
+    
+    fg_binary_map(isnan(fg_binary_map))=0;
+    fg_binary_map = floor(fg_binary_map.*threshold);
+    fg_binary_map = ceil(fg_binary_map.*(1/threshold));
     
     foreground_map = fg_binary_map;
     
