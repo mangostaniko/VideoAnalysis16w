@@ -36,8 +36,8 @@ function foreground_map = segmentation(frames,fg_scribbles,Hfc,Hbc,bins)
     %----------------------------------------------------------------------
     % Task e: Filter cost-volume with guided filter
     %----------------------------------------------------------------------
-    filter_radius = 20;
-    filter_radius_frames = 5;
+    filter_radius = 5;
+    filter_radius_frames = 1;
     eps = 0.00001;
     cost_volume_filtered = guidedfilter_vid_color(frames, cost_volume, filter_radius, filter_radius_frames, eps);
     

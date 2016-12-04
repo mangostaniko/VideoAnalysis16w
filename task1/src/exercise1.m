@@ -43,7 +43,7 @@ function exercise1(input_directory, output_directory, file_extension)
     frames = [];
     count = 0;
     loop_cnt = 0;
-    loop_size = 22; % frame batch size for segmentation
+    loop_size = 10; % frame batch size for segmentation
 
     for j = 1:(numel(file_list))
         frame_name = file_list(j).name;

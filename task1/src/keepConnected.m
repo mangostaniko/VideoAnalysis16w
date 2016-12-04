@@ -2,7 +2,7 @@ function seg_n=keepConnected(seg,firstFrameScribbles)
     sFg = zeros(size(seg));
     sFg(:,:,1)=firstFrameScribbles;
     % connected components
-    segLbl = labelmatrix(bwconncomp(seg,26)); %6,18,26
+    segLbl = labelmatrix(bwconncomp(seg, 26)); % 6,18,26 3D neighborhood
     % scribble labels
     sLbl=segLbl(sFg==1);
     sLblList=unique(sLbl(:));
