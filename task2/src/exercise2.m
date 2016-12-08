@@ -37,7 +37,7 @@ function exercise2(input_directory, output_directory, file_extension)
         % copies of files frame-00001 to frame-00010 are named frame-00011 to frame-00020
         [fileNamePrefix, fileNameRemainder] = strtok(file_list(i).name, '-');
         newFileName = [fileNamePrefix '-' sprintf('%05d',numel(file_list)+i) '.' file_extension];
-        copyfile([input_directory '/' file_list(i).name], [input_directory '/' newFileName]);    
+        %copyfile([input_directory '/' file_list(i).name], [input_directory '/' newFileName]);    
     end
     
 	
@@ -49,9 +49,9 @@ function exercise2(input_directory, output_directory, file_extension)
         %------------------------------------------------------------------
         % Task b: Compute optical flow vectors
         %------------------------------------------------------------------
-        % call function get_opticalflow 
-        % return parameter=get_opticalflow(parameters,...);
-    
+        
+        flowVectors = get_opticalflow(firstframe, secondframe, 5, 100); % TODO tweak parameters!
+        quiver(flowVectors(:,:,1), flowVectors(:,:,2)); % visualize flow vector field
         
         %------------------------------------------------------------------
         % Task c+d: Generate new frame
