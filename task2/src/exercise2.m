@@ -49,7 +49,6 @@ function exercise2(input_directory, output_directory, file_extension)
         %------------------------------------------------------------------
         % Task b: Compute optical flow vectors
         %------------------------------------------------------------------
-        
         flowVectors = get_opticalflow(firstframe, secondframe, 5, 100); % TODO tweak parameters!
         quiver(flowVectors(:,:,1), flowVectors(:,:,2)); % visualize flow vector field
         
@@ -58,7 +57,8 @@ function exercise2(input_directory, output_directory, file_extension)
         %------------------------------------------------------------------
         % call function get_inbetween_image 
         % return parameter=get_inbetween_image(parameters,...);
-
+        new_image = get_inbetween_image(firstframe, flowVectors(:,:,1), flowVectors(:,:,2));
+        
         cnt=cnt+1; imwrite(firstframe,  getFileName(cnt,output_directory,file_extension));
         cnt=cnt+1; imwrite(uint8(new_image),  getFileName(cnt,output_directory,file_extension));
         cnt=cnt+1; imwrite(secondframe,  getFileName(cnt,output_directory,file_extension));

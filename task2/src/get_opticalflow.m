@@ -39,7 +39,7 @@ for i=1:iterations
     % optical flow vectors are scaled down less and can use more of
     % neighboring values
     brightnessConstancyTerm = uAvg.*Fx + vAvg.*Fy + Ft;
-    smoothnessTerm = Fx.*Fx + Fy.*Fy + alpha; % small if field is smooth (less scaling down)
+    smoothnessTerm = Fx.*Fx + Fy.*Fy + alpha.*alpha; % small if field is smooth (less scaling down)
     u = uAvg - brightnessConstancyTerm .* Fx ./ smoothnessTerm;
     v = vAvg - brightnessConstancyTerm .* Fy ./ smoothnessTerm;
     
