@@ -40,5 +40,10 @@ function new_image = get_inbetween_image(image, u, v)
     %---------------------------------------------------------------------
     % Task d: Generate new frame
     %---------------------------------------------------------------------
-
+    new_image = single(new_image);
+    new_image(:,:,1) = interp2(old_x, old_y, new_image(:,:,1), new_x, new_y);
+    new_image(:,:,2) = interp2(old_x, old_y, new_image(:,:,2), new_x, new_y);
+    new_image(:,:,3) = interp2(old_x, old_y, new_image(:,:,3), new_x, new_y);
+    
+    
 end
