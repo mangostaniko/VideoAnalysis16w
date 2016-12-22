@@ -50,7 +50,7 @@ function exercise2(input_directory, output_directory, file_extension)
         % Task b: Compute optical flow vectors
         %------------------------------------------------------------------
         flowVectors = get_opticalflow(firstframe, secondframe, 5, 100); % TODO tweak parameters!
-        quiver(flowVectors(:,:,1), flowVectors(:,:,2)); % visualize flow vector field
+        %quiver(flowVectors(:,:,1), flowVectors(:,:,2)); % visualize flow vector field
         
         %------------------------------------------------------------------
         % Task c+d: Generate new frame
