@@ -55,6 +55,11 @@ function exercise3(input_directory_fg,input_directory_bg, input_directory_fg_map
         % Task a: Adjust brightness and resize foreground object
         %------------------------------------------------------------------
         
+        fg = imresize(fg, 0.4);
+        foreground_map = imresize(foreground_map, 0.4);
+        factor = 1;
+        fg = change_illumination(fg, factor);
+        
         %------------------------------------------------------------------
         % Task b: Add shadow of foreground object to background
         %------------------------------------------------------------------
