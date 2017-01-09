@@ -60,11 +60,11 @@ function exercise3(input_directory_fg, input_directory_bg, input_directory_fg_ma
         % Task b: Add shadow of foreground object to background
         %------------------------------------------------------------------
         
-        % xpos and ypos should be the left upper corner
-        % of the foreground image in the background image
+        % xpos and ypos define be the left upper corner
+        % of the foreground image placed in the background image
         % note: matlab stores images as (y, x, color)
-        ypos = 10;
-        xpos = 10;
+        ypos = size(bg,1)-size(foreground_map,1);
+        xpos = 120;
         bgWithShadow = add_shadow(xpos, ypos, bg, foreground_map);
         
         %------------------------------------------------------------------

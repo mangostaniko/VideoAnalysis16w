@@ -9,9 +9,9 @@ function bg_with_shadow = add_shadow(xpos, ypos, bg, foreground_map)
     % note: the projection here is not perspective correct
     % we just rotate and scale the x and y axis a bit, 
     % to get the impression of shadow at an angle
-    projectionMatrix = [10 -3 0; 10 5 0; 0 0 1];
+    projectionMatrix = [10 -5 0; 10 3 0; 0 0 1];
     transformationStructure = maketform('projective', projectionMatrix);
-    shadowMapFromFgMap = imtransform(foreground_map, transformationStructure, 'XYScale', [12 22]); % XYScale specifies width and height of transformed pixels so that they can be automatically scaled down to square pixels
+    shadowMapFromFgMap = imtransform(foreground_map, transformationStructure, 'XYScale', [22 12]); % XYScale specifies width and height of transformed pixels so that they can be automatically scaled down to square pixels
     
     % put shadow map into frame of same dimensions as background frame for
     % easier merging. insert shadowMap at [xpos ypos].
@@ -24,18 +24,18 @@ function bg_with_shadow = add_shadow(xpos, ypos, bg, foreground_map)
     %imshow(shadowMapFrame); return;
     
     % add color to shadow
-    shadowColor = [1.0 0.0 1.0];
+    shadowColor = [0.0 0.0 0.0];
     shadowMapColor = cat(3, shadowMap .* shadowColor(1), shadowMap .* shadowColor(2), shadowMap .* shadowColor(3));
     %imshow(shadowMapFrameColor); return;
     
     % merge shadow with background
     % pixels without shadow (shadowMap == 0) will have full bgColor,
     % pixels with shadow will have shadowColor*shadowAlpha + bgColor*(1-shadowAlpha).
-    shadowAlpha = 0.5;
+    shadowAlpha = 0.7;
     bg = double(bg)/255;
     shadowMapColor = shadowMapColor .* shadowAlpha;
     bg_with_shadow = shadowMapColor + bg .* (1-repmat(shadowMap,1,1,3).*shadowAlpha);
-    imshow(bg_with_shadow); return;
+    %imshow(bg_with_shadow); return;
         
 end
 
