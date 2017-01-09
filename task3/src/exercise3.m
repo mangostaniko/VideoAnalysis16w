@@ -72,7 +72,7 @@ function exercise3(input_directory_fg, input_directory_bg, input_directory_fg_ma
         %------------------------------------------------------------------
 
         result = merge(xpos, ypos, bgWithShadow, fg, foreground_map);
-        imshow(result); return;
+        %imshow(result); return;
         
         % store resulting image
         cnt = cnt+1;
@@ -83,8 +83,8 @@ function exercise3(input_directory_fg, input_directory_bg, input_directory_fg_ma
     %------------------------------------------------------------------
     % Task d: create output video
     %------------------------------------------------------------------
-    % call function create_video 
-    % create_video(parameters,...);
+    
+    create_video('output', '../output', 'png');
     
 end
 

@@ -20,7 +20,7 @@ function bg_with_shadow = add_shadow(xpos, ypos, bg, foreground_map)
     availableSpaceY = size(shadowMap,1) - ypos;
     regionFilledX = min(availableSpaceX, size(shadowMapFromFgMap,2));
     regionFilledY = min(availableSpaceY, size(shadowMapFromFgMap,1));
-    shadowMap(ypos:ypos+regionFilledY-1, xpos:xpos+regionFilledX-1) = shadowMapFromFgMap(1:regionFilledY, 1:regionFilledX);
+    shadowMap(ypos+1:ypos+regionFilledY, xpos+1:xpos+regionFilledX) = shadowMapFromFgMap(1:regionFilledY, 1:regionFilledX);
     %imshow(shadowMapFrame); return;
     
     % add color to shadow

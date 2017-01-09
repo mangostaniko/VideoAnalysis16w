@@ -12,7 +12,7 @@ function result = merge(xpos, ypos, bg, foreground, foreground_map)
     availableSpaceY = size(fg,1) - ypos;
     regionFilledX = min(availableSpaceX, size(foreground,2));
     regionFilledY = min(availableSpaceY, size(foreground,1));
-    fg(ypos:ypos+regionFilledY-1, xpos:xpos+regionFilledX-1, :) = foreground(1:regionFilledY, 1:regionFilledX, :);
+    fg(ypos+1:ypos+regionFilledY, xpos+1:xpos+regionFilledX, :) = foreground(1:regionFilledY, 1:regionFilledX, :);
     %imshow(fg); return;
     
     % put foreground map into frame of same dimensions as background frame for
@@ -22,7 +22,7 @@ function result = merge(xpos, ypos, bg, foreground, foreground_map)
     availableSpaceY = size(fgMap,1) - ypos;
     regionFilledX = min(availableSpaceX, size(foreground,2));
     regionFilledY = min(availableSpaceY, size(foreground,1));
-    fgMap(ypos:ypos+regionFilledY-1, xpos:xpos+regionFilledX-1) = foreground_map(1:regionFilledY, 1:regionFilledX);
+    fgMap(ypos+1:ypos+regionFilledY, xpos+1:xpos+regionFilledX) = foreground_map(1:regionFilledY, 1:regionFilledX);
     fgMap = repmat(fgMap,1,1,3);
     %imshow(fgMap); return;
     
